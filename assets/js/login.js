@@ -13,6 +13,7 @@ $(function() {
 
     // 从layui 中获取form 对象
     var form = layui.form;
+    // 内置模块——弹出层——内置方法——msg
     var layer = layui.layer;
 
 
@@ -21,7 +22,7 @@ $(function() {
         // 自定义了一个叫做pwd的校验规则
         pwd: [
             /^[\S]{6,12}$/,
-            '密码必须6到12位，且不能出现空格'
+            '密码必须6到12位,且不能出现空格'
         ],
         // 校验两次密码是否一致的规则
         repwd: function(value) {
@@ -38,15 +39,18 @@ $(function() {
 
     // 监听注册表单的提交事件
     $('#form_reg').on('submit', function(e) {
+        // 阻止默认的提交行为
         e.preventDefault();
         var data = {
             username: $('#form_reg [name = username]').val(),
             password: $('#form_reg [name = password]').val()
         };
+        // 发起ajax的post请求
         $.post('/api/reguser', data, function(res) {
             if (res.status !== 0) {
                 return layer.msg(res.message);
             }
+            // console.log('注册成功');
             layer.msg('注册成功！');
             // 模拟人的点击行为
             $('#link_login').click();
